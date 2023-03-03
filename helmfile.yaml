@@ -9,3 +9,8 @@ releases:
     version: 19.7.2
     values:
       - prometheus.yaml
+  - name: transmission
+    namespace: torrent
+    chart: ./transmission
+    version: 0.1.0
+    values: [transmission.yaml]

@@ -1,0 +1,16 @@
+ingress:
+  host: dl.home.damoun.cloud
+
+config:
+  path: /mnt/pool1/persistent-volume/torrent/transmission-config
+  server: nas.home.damoun.cloud
+  storage:
+    capacity: 4Gi
+    request: 2Gi
+
+downloads:
+  path: /mnt/pool1/persistent-volume/torrent/transmission-downloads
+  server: nas.home.damoun.cloud
+  storage:
+    capacity: 128Gi
+    request: 80Gi
