@@ -1,0 +1,27 @@
+ingress:
+  host: hass.home.damoun.cloud
+
+ps:
+  path: /mnt/pool1/persistent-volume/home-automation/hass-config
+  server: nas.home.damoun.cloud
+  storage:
+    capacity: 8Gi
+    request: 4Gi
+
+configmap:
+  config:
+    data:
+      configuration.yaml: |
+        default_config:
+        http:
+          use_x_forwarded_for: true
+          trusted_proxies:
+            - "10.0.0.0/8"
+        homeassistant:
+          auth_providers:
+            - type: homeassistant
+          name: Home
+          temperature_unit: C
+          time_zone: Europe/Amsterdam
+          unit_system: metric
+          currency: EUR

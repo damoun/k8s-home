@@ -14,3 +14,8 @@ releases:
     chart: ./transmission
     version: 0.1.0
     values: [transmission.yaml]
+  - name: home-assistant
+    namespace: home-automation
+    chart: ./home-assistant
+    version: 0.1.0
+    values: [home-assistant.yaml]
