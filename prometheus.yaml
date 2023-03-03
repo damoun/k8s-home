@@ -1,0 +1,17 @@
+alertmanager:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+kube-state-metrics:
+  enabled: false
+
+server:
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - prom.home.damoun.cloud
+      - prometheus.home.damoun.cloud
