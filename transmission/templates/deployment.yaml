@@ -35,10 +35,10 @@ spec:
             - name: http
               containerPort: 9091
               protocol: TCP
-            - name: p2p
+            - name: peer-tcp
               containerPort: 51413
               protocol: TCP
-            - name: p2p-udp
+            - name: peer-udp
               containerPort: 51413
               protocol: UDP
           livenessProbe:
