@@ -1,0 +1,11 @@
+pv:
+  github:
+    path: /mnt/pool1/backup/github
+    server: nas.home.damoun.cloud
+    storage:
+      capacity: 48Gi
+      request: 16Gi
+
+config:
+  github:
+    username: damoun
