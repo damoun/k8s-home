@@ -1,6 +1,8 @@
 repositories:
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
+  - name: 1password
+    url: https://1password.github.io/connect-helm-charts/
 
 releases:
   - name: prometheus
@@ -19,3 +21,13 @@ releases:
     chart: ./home-assistant
     version: 0.1.0
     values: [home-assistant.yaml]
+  - name: connect
+    namespace: 1password
+    chart: 1password/connect
+    set:
+      - name: connect.credentials
+        file: 1password-credentials.json
+      - name: operator.create
+        value: true
+      - name: operator.token.value
+        file: 1password-access-token.txt
