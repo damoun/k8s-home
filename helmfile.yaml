@@ -32,8 +32,13 @@ releases:
         value: true
       - name: operator.token.value
         file: 1password-access-token.txt
+  - name: addons-gickup
+    chart: addons/gickup
+    namespace: backup
   - name: gickup
     namespace: backup
     chart: damoun/gickup
+    needs:
+      - backup/addons-gickup
     values:
       - gickup.yaml

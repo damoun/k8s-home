@@ -1,11 +1,20 @@
-pv:
-  github:
-    path: /mnt/pool1/backup/github
-    server: nas.home.damoun.cloud
-    storage:
-      capacity: 48Gi
-      request: 16Gi
-
-config:
-  github:
-    username: damoun
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteMany
+  size: 15Gi
+  storageClassName: backup-git-nfs
+secret:
+  enabled: true
+  name: github-token
+config: |
+  source:
+    github:
+      - token_file: /secret/github-token.txt
+        username: damoun
+  destination:
+    local:
+      - path: /data
+        bare: true
+        zip: true
+        structured: true
