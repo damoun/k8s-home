@@ -1,0 +1,26 @@
+ingress:
+  enbled: false
+
+annotations:
+  operator.1password.io/item-path: "vaults/Kubernetes/items/proxmox-exporter-login"
+  operator.1password.io/item-name: "proxmox-exporter-login"
+
+serviceMonitor:
+  enabled: true
+  targets:
+    - name: pve.home.damoun.cloud
+      url: pve.home.damoun.cloud:8006
+
+env:
+  - name: PVE_USER
+    valueFrom:
+      secretKeyRef:
+        key: username
+        name: proxmox-exporter-login
+  - name: PVE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: password
+        name: proxmox-exporter-login
+  - name: PVE_VERIFY_SSL
+    value: "false"
