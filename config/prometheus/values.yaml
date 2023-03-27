@@ -1,17 +1,70 @@
-alertmanager:
-  enabled: false
-
-prometheus-pushgateway:
-  enabled: false
-
-kube-state-metrics:
-  enabled: false
-
-server:
-  service:
-    type: ClusterIP
+global:
+  rbac:
+    createAggregateClusterRoles: true
+    pspEnabled: true
+    pspAnnotations:
+      seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+defaultRules:
+  create: false
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: node
+        scheme: http
+        static_configs:
+          - targets:
+            - pve.home.damoun.cloud:9100
+            - k8s-cp1.home.damoun.cloud:9100
+            - k8s-n1.home.damoun.cloud:9100
+            - k8s-n2.home.damoun.cloud:9100
+            - k8s-n3.home.damoun.cloud:9100
+            - vpn1.home.damoun.cloud:9100
+            - nas.home.damoun.cloud:9100
   ingress:
     enabled: true
     hosts:
       - prom.home.damoun.cloud
       - prometheus.home.damoun.cloud
+nodeExporter:
+  enabled: false
+grafana:
+  defaultDashboardsEnabled: false
+  initChownData:
+    enabled: false
+  persistence:
+    enabled: true
+    storageClassName: prometheus-grafana-nfs
+    accessModes:
+      - ReadWriteMany
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.home.damoun.cloud
+      - gf.home.damoun.coud
+  annotations:
+    operator.1password.io/item-path: "vaults/Kubernetes/items/grafana-admin-user"
+    operator.1password.io/item-name: "grafana-admin-user"
+  admin:
+    existingSecret: "grafana-admin-user"
+    userKey: username
+    passwordKey: password
+raw:
+  resources:
+    - apiVersion: v1
+      kind: PersistentVolume
+      metadata:
+        name: prometheus-grafana
+      spec:
+        capacity:
+          storage: 10Gi
+        volumeMode: Filesystem
+        accessModes:
+          - ReadWriteMany
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: prometheus-grafana-nfs
+        mountOptions:
+          - hard
+          - nfsvers=4.1
+        nfs:
+          path: /mnt/pool1/persistent-volume/monitoring/grafana
+          server: nas.home.damoun.cloud

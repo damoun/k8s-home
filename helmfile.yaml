@@ -3,6 +3,8 @@ repositories:
     url: https://prometheus-community.github.io/helm-charts
   - name: 1password
     url: https://1password.github.io/connect-helm-charts/
+  - name: incubator
+    url: https://charts.helm.sh/incubator
   - name: damoun
     url: https://damoun.github.io/helm-charts/
 
@@ -11,6 +13,10 @@ templates:
     missingFileHandler: Warn
     values:
       - config/{{`{{ .Release.Name }}`}}/values.yaml
+  raw:
+    dependencies:
+      - chart: incubator/raw
+        version: x.x.x
 
 releases:
   - name: connect
@@ -29,22 +35,30 @@ releases:
     version: 19.7.2
     inherit:
       - template: default
+      - template: raw
+    needs:
+      - 1password/connect
+      - monitoring/prometheus-operator-crds
   - name: transmission
     namespace: torrent
     chart: damoun/transmission
     inherit:
       - template: default
+      - template: raw
   - name: home-assistant
     namespace: home-automation
     chart: damoun/home-assistant
     inherit:
       - template: default
-  - name: addons-gickup
-    chart: addons/gickup
-    namespace: backup
   - name: gickup
     namespace: backup
     chart: damoun/gickup
+    version: 1.x.x
+    inherit:
+      - template: default
+      - template: raw
+    needs:
+      - 1password/connect
   - name: blackbox-exporter
     namespace: monitoring
     chart: prometheus-community/prometheus-blackbox-exporter
