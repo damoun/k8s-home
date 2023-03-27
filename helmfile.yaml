@@ -29,10 +29,14 @@ releases:
         value: true
       - name: operator.token.value
         file: 1password-access-token.txt
+  - name: prometheus-operator-crds
+    chart: prometheus-community/prometheus-operator-crds
+    namespace: monitoring
+    version: 2.0.0
   - name: prometheus
     namespace: monitoring
-    chart: prometheus-community/prometheus
-    version: 19.7.2
+    chart: prometheus-community/kube-prometheus-stack
+    version: 45.7.x
     inherit:
       - template: default
       - template: raw
@@ -42,6 +46,7 @@ releases:
   - name: transmission
     namespace: torrent
     chart: damoun/transmission
+    version: 1.x.x
     inherit:
       - template: default
       - template: raw
