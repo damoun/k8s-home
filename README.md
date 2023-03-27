@@ -13,6 +13,15 @@
 
 # Getting Started
 
+## Install CRDs
+
+```
+helmfile apply -l name=connect
+helmfile apply -l name=prometheus-operator-crds
+```
+
+## Deploy all the applications
+
 ```
 helmfile apply
 ```
