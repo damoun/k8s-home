@@ -1,0 +1,31 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: blackbox-exporter.home.damoun.cloud
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+config:
+  modules:
+    http_2xx:
+      http:
+        tls_config:
+          insecure_skip_verify: true
+serviceMonitor:
+  enabled: true
+  defaults:
+    labels:
+      release: prometheus
+  targets:
+    - name: home-assistant
+      url: "http://hass.home.damoun.cloud"
+    - name: grafana
+      url: "http://grafana.home.damoun.cloud"
+    - name: prometheus
+      url: "http://prom.home.damoun.cloud"
+    - name: transmission
+      url: "http://dl.home.damoun.cloud"
+    - name: truenas
+      url: "https://nas.home.damoun.cloud"
+    - name: proxmox
+      url: "https://pve.home.damoun.cloud:8006"

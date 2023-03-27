@@ -45,6 +45,14 @@ releases:
   - name: gickup
     namespace: backup
     chart: damoun/gickup
+  - name: blackbox-exporter
+    namespace: monitoring
+    chart: prometheus-community/prometheus-blackbox-exporter
+    version: 7.6.x
+    inherit:
+      - template: default
+    needs:
+      - monitoring/prometheus-operator-crds
     inherit:
       - template: default
     needs:
