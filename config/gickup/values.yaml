@@ -18,3 +18,29 @@ config: |
         bare: true
         zip: true
         structured: true
+raw:
+  resources:
+    - apiVersion: onepassword.com/v1
+      kind: OnePasswordItem
+      metadata:
+        name: github-token
+      spec:
+        itemPath: "vaults/Kubernetes/items/gickup-github-token"
+    - apiVersion: v1
+      kind: PersistentVolume
+      metadata:
+        name: gickup-data
+      spec:
+        capacity:
+          storage: 16Gi
+        volumeMode: Filesystem
+        accessModes:
+          - ReadWriteMany
+        persistentVolumeReclaimPolicy: Retain
+        storageClassName: backup-git-nfs
+        mountOptions:
+          - hard
+          - nfsvers=4.1
+        nfs:
+          path: /mnt/pool1/backup/git
+          server: nas.home.damoun.cloud
